@@ -1,11 +1,14 @@
 package br.inatel.pos.dm111.vfp.api.restaurant.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ValidationUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +45,16 @@ public class RestaurantController
 		var response = service.createRestaurant(request);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
+	
+	   @GetMapping
+	    public ResponseEntity<List<RestaurantResponse>> getAllRestaurants() throws ApiException {
+	        log.debug("Received request to list all restaurants");
+
+	        var response = service.searchRestaurants();
+	        return ResponseEntity
+	                .status(HttpStatus.OK)
+	                .body(response);
+	    }
 
 	private void validateRequest(RestaurantRequest request, BindingResult bindingResult) throws ApiException
 	{

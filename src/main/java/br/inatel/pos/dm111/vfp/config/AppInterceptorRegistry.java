@@ -11,8 +11,8 @@ import java.util.List;
 public class AppInterceptorRegistry implements WebMvcConfigurer {
 
     private static final List<String> ENDPOINTS_PATTERN = List.of(
-            "/valefood/promo**",
-            "/valefood/promo/**"
+            "/valefood/promotions**",
+            "/valefood/promotions/**"
             );
 
     private final AuthenticationInterceptor interceptor;
