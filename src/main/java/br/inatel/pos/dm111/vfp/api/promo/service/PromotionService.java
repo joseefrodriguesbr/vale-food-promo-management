@@ -24,7 +24,9 @@ import br.inatel.pos.dm111.vfp.persistence.restaurant.Product;
 import br.inatel.pos.dm111.vfp.persistence.restaurant.Restaurant;
 import br.inatel.pos.dm111.vfp.persistence.restaurant.RestaurantRepository;
 import br.inatel.pos.dm111.vfp.persistence.user.User;
+import br.inatel.pos.dm111.vfp.persistence.user.User.UserType;
 import br.inatel.pos.dm111.vfp.persistence.user.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class PromotionService
@@ -33,25 +35,30 @@ public class PromotionService
 
 	private final PromotionRepository promotionRepository;
 
-	private final RestaurantRepository restaurantRepository; // Repositório local
+	private final RestaurantRepository restaurantRepository; 
 
-	private final UserRepository userRepository; // Repositório local
+	private final UserRepository userRepository; 
 
-	public PromotionService(PromotionRepository promotionRepository, RestaurantRepository restaurantRepository, UserRepository userRepository)
+	private final HttpServletRequest request;
+
+	public PromotionService(PromotionRepository promotionRepository, RestaurantRepository restaurantRepository, UserRepository userRepository, HttpServletRequest request)
 	{
 		this.promotionRepository = promotionRepository;
 		this.restaurantRepository = restaurantRepository;
 		this.userRepository = userRepository;
+		this.request = request;
 	}
 
 	// Contexto do Restaurante (CRUD de Promoções)
 	public PromotionResponse createPromotion(PromotionRequest request) throws ApiException
 	{
+		valideUser(UserType.RESTAURANT);
 		// Validação: 1. O restaurante existe localmente?
 		var restaurantOpt = retrieveRestaurantById(request.restaurantId());
 		Restaurant restaurant = restaurantOpt.get();
 		// Validação: 2. Os produtos existem no cardápio local do restaurante?
 		validateProduct(request.product(), restaurant.products());
+		
 		Promotion promotion = buildPromotion(request);
 		promotionRepository.save(promotion);
 		return buildPromotionResponse(promotion, restaurant);
@@ -71,6 +78,7 @@ public class PromotionService
 
 	public PromotionResponse updatePromotion(PromotionRequest request, String id) throws ApiException
 	{
+		valideUser(UserType.RESTAURANT);
 		var promotionOpt = retrievePromotionById(id);
 		if (promotionOpt.isEmpty())
 		{
@@ -95,6 +103,7 @@ public class PromotionService
 	// Método para deletar uma promoção
 	public void deletePromotion(String id) throws ApiException
 	{
+		valideUser(UserType.RESTAURANT);
 		var promotionOpt = retrievePromotionById(id);
 		if (promotionOpt.isPresent())
 		{
@@ -117,10 +126,13 @@ public class PromotionService
 
 	public List<PromotionResponse> listRestaurantPromotions(String restaurantId) throws ApiException
 	{
-		// Restaurant restaurant = restaurantRepository.getById(restaurantId).orElseThrow(() -> new ApiException(AppErrorCode.RESTAURANT_NOT_FOUND));
 		var restaurantOpt = retrieveRestaurantById(restaurantId);
+		if (restaurantOpt.isEmpty())
+		{
+			log.warn("Restaurant was not found for the promotion update. Id: {}", restaurantId);
+			throw new ApiException(AppErrorCode.RESTAURANT_NOT_FOUND);
+		}
 		Restaurant restaurant = restaurantOpt.get();
-		// List<Promotion> promotions = promotionRepository.findByRestaurantId(restaurantId);
 		List<Promotion> promotions = retrievePromotionsById(restaurantId);
 		return promotions.stream().map(p -> buildPromotionResponse(p, restaurant)).collect(Collectors.toList());
 	}
@@ -128,7 +140,6 @@ public class PromotionService
 	// Contexto do Cliente (Listagem de Promoções)
 	public List<PromotionResponse> listAllPromotions() throws ApiException
 	{
-		// return promotionRepository.getAll().stream().map(this::buildPromotionResponse).collect(Collectors.toList());
 		List<Promotion> promotions = retrievePromotions();
 		return buildPromotionResponse(promotions);
 	}
@@ -182,6 +193,15 @@ public class PromotionService
 		if (!productExists)
 		{
 			throw new ApiException(AppErrorCode.PRODUCT_NOT_FOUND);
+		}
+	}
+	
+	private void valideUser(UserType userType) throws ApiException {
+		User user = (User) request.getAttribute("authenticatedUser");
+		if (!userType.equals(user.type()))
+		{
+			log.info("User provided is not valid for this operation. UserId: {}", user.id());
+			throw new ApiException(AppErrorCode.INVALID_USER_TYPE);
 		}
 	}
 

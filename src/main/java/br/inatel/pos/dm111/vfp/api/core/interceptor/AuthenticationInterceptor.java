@@ -1,17 +1,9 @@
 package br.inatel.pos.dm111.vfp.api.core.interceptor;
 
-import br.inatel.pos.dm111.vfp.api.core.ApiException;
-import br.inatel.pos.dm111.vfp.api.core.AppErrorCode;
-import br.inatel.pos.dm111.vfp.persistence.restaurant.Restaurant;
-import br.inatel.pos.dm111.vfp.persistence.restaurant.RestaurantRepository;
-import br.inatel.pos.dm111.vfp.persistence.user.User;
-import br.inatel.pos.dm111.vfp.persistence.user.UserRepository;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.impl.DefaultJws;
-import io.jsonwebtoken.lang.Strings;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +12,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ExecutionException;
+import br.inatel.pos.dm111.vfp.api.core.ApiException;
+import br.inatel.pos.dm111.vfp.api.core.AppErrorCode;
+import br.inatel.pos.dm111.vfp.persistence.restaurant.Restaurant;
+import br.inatel.pos.dm111.vfp.persistence.restaurant.RestaurantRepository;
+import br.inatel.pos.dm111.vfp.persistence.user.User;
+import br.inatel.pos.dm111.vfp.persistence.user.UserRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.impl.DefaultJws;
+import io.jsonwebtoken.lang.Strings;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
@@ -35,11 +37,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private final JwtParser jwtParser;
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
+    
+    private final TokenService tokenService;
 
-    public AuthenticationInterceptor(JwtParser jwtParser, UserRepository userRepository, RestaurantRepository restaurantRepository) {
+    public AuthenticationInterceptor(JwtParser jwtParser, UserRepository userRepository, RestaurantRepository restaurantRepository, TokenService tokenService) {
         this.jwtParser = jwtParser;
         this.userRepository = userRepository;
         this.restaurantRepository = restaurantRepository;
+        this.tokenService = tokenService;
     }
 
     // USERS
@@ -72,6 +77,18 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
             var appJwtToken = new AppJwtToken(issuer, subject, role, method, uri);
             authenticateRequest(appJwtToken);
+            
+            Claims claims = tokenService.readToken(token);
+
+            // pega o email do "sub"
+            String email = claims.getSubject();
+
+            // busca usuário no repositório
+            Optional<User> userOpt = userRepository.getByEmail(email);
+            if (userOpt.isPresent()) {
+                // salva o usuário na request para ser usado depois
+                request.setAttribute("authenticatedUser", userOpt.get());
+            }
 
             return true;
 

@@ -99,7 +99,7 @@ public class PromotionController {
                 .body(response);
     }
 
-    @GetMapping("/by-user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<PromotionResponse>> listPromotionsByInterest(@PathVariable("userId") String userId) throws ApiException {
         log.info("Received request to list promotions by interest for user with id: {}", userId);
 
