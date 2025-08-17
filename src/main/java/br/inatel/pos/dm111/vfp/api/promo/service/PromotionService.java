@@ -26,6 +26,7 @@ import br.inatel.pos.dm111.vfp.persistence.restaurant.RestaurantRepository;
 import br.inatel.pos.dm111.vfp.persistence.user.User;
 import br.inatel.pos.dm111.vfp.persistence.user.User.UserType;
 import br.inatel.pos.dm111.vfp.persistence.user.UserRepository;
+import br.inatel.pos.dm111.vfp.publisher.AppPublisher;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -40,13 +41,16 @@ public class PromotionService
 	private final UserRepository userRepository; 
 
 	private final HttpServletRequest request;
+	
+	private final AppPublisher promotionPublisher;
 
-	public PromotionService(PromotionRepository promotionRepository, RestaurantRepository restaurantRepository, UserRepository userRepository, HttpServletRequest request)
+	public PromotionService(PromotionRepository promotionRepository, RestaurantRepository restaurantRepository, UserRepository userRepository, HttpServletRequest request, AppPublisher promotionPublisher)
 	{
 		this.promotionRepository = promotionRepository;
 		this.restaurantRepository = restaurantRepository;
 		this.userRepository = userRepository;
 		this.request = request;
+		this.promotionPublisher = promotionPublisher;
 	}
 
 	// Contexto do Restaurante (CRUD de Promoções)
@@ -61,6 +65,11 @@ public class PromotionService
 		
 		Promotion promotion = buildPromotion(request);
 		promotionRepository.save(promotion);
+		
+		var published = promotionPublisher.publishCreated(promotion);
+        if (!published) {
+            log.error("Promotion created was not published. Needs to be re published later on... User Id: {}", promotion.id());
+        }
 		return buildPromotionResponse(promotion, restaurant);
 	}
 

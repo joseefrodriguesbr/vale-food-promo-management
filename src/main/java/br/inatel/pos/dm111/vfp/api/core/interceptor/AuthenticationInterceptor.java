@@ -119,22 +119,22 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             throw new ApiException(AppErrorCode.INVALID_USER_CREDENTIALS);
         }
 
-        if (appJwtToken.uri().startsWith("/valefood/restaurants/")) {
-            if (appJwtToken.method().equals(HttpMethod.PUT.name()) ||
-                    appJwtToken.method().equals(HttpMethod.DELETE.name()))  {
-                var splitUri = appJwtToken.uri().split("/");
-                var pathRestaurantId = splitUri[3];
-                var restaurant = retrieveRestaurantById(pathRestaurantId).orElseThrow(() -> {
-                    log.info("Restaurant does not exist");
-                    return new ApiException(AppErrorCode.INVALID_USER_CREDENTIALS);
-                });
-
-                if (!user.id().equals(restaurant.userId())) {
-                    log.info("User provided didn't match to the user linked to restaurant user Id: {}", user.id());
-                    throw new ApiException(AppErrorCode.INVALID_USER_CREDENTIALS);
-                }
-            }
-        }
+//        if (appJwtToken.uri().startsWith("/valefood/restaurants/")) {
+//            if (appJwtToken.method().equals(HttpMethod.PUT.name()) ||
+//                    appJwtToken.method().equals(HttpMethod.DELETE.name()))  {
+//                var splitUri = appJwtToken.uri().split("/");
+//                var pathRestaurantId = splitUri[3];
+//                var restaurant = retrieveRestaurantById(pathRestaurantId).orElseThrow(() -> {
+//                    log.info("Restaurant does not exist");
+//                    return new ApiException(AppErrorCode.INVALID_USER_CREDENTIALS);
+//                });
+//
+//                if (!user.id().equals(restaurant.userId())) {
+//                    log.info("User provided didn't match to the user linked to restaurant user Id: {}", user.id());
+//                    throw new ApiException(AppErrorCode.INVALID_USER_CREDENTIALS);
+//                }
+//            }
+//        }
     }
 
     private Optional<User> retrieveUserByEmail(String email) throws ApiException {
