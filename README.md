@@ -50,21 +50,26 @@ server.port=8083
 ```
 📦vale-food-promo-management
  ┗📂br.inatel.pos.dm111.vfp
-   ┣📂api                          # Diretório onde o npm (Node Package Manager) instala todas as dependências do projeto.
-   ┃ ┣📂core                       # Responsável pela comunicação com o serviço auth
-   ┃ ┃ ┗📂interceptor              # Responsável por atender às requisições do CRUD do serviço Estoque
-   ┃ ┣📂promo          # Responsável pela comunicação com o serviço auth
-   ┃ ┣📂restaurant          # Responsável pela comunicação com o serviço auth
-   ┃ ┗📂user       # Responsável por atender às requisições do CRUD do serviço Estoque
+   ┣📂api                          
+   ┃ ┣📂core                      
+   ┃ ┃ ┗📂interceptor              
+   ┃ ┣📂promo          
+   ┃ ┃ ┣📂controller
+   ┃ ┃ ┗📂service 
+   ┃ ┣📂restaurant         
+   ┃ ┃ ┣📂controller
+   ┃ ┃ ┗📂service 
+   ┃ ┗📂user       
+   ┃   ┣📂controller
+   ┃   ┗📂service 
    ┣📂config             		 
-   ┃ ┣📜AuthController.js          # Responsável pela comunicação com o serviço auth
-   ┃ ┗📜EstoqueController.js       # Responsável por atender às requisições do CRUD do serviço Estoque
    ┣📂consumer
-   ┃ ┗📜config.js                  # Configurações do MongoDB
    ┣📂persistence                      
-   ┃ ┗📜index.js                   # Responsável pelo registro de logs (não utilizado)
+   ┃ ┣📂promo          
+   ┃ ┣📂restaurant          
+   ┃ ┗📂user       
    ┗📂publisher           	 
-    ┗📜AlarmeService.js           # Responsável pela comunicação de alarmes ao serviço monitor
+
 ```
 
 
