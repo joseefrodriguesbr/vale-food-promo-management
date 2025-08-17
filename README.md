@@ -74,26 +74,22 @@ server.port=8083
 
 
 ### ⚙️ Rotas:
-🔓 **Rota pública** (sem autenticação):  
-🌐 **GET /**  
-* **Descrição:** Rota raiz, responde com uma mensagem simples JSON.  
-* **Resposta:** { msg: "Olá mundo!" }  
 
 🔐 **Rotas protegidas** (com JWT via AuthController.verificaJWT):  
 As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT.  
 
 🌐 **POST /estoque**  
-* **Descrição:** Insere um novo produto no estoque.  
-* **Middlewares:**
-  * **validaProduto:** valida os dados do produto.
-  * **inserir:** insere o produto no banco de dados.
+* **Descrição:** Insere uma nova promoção.  
 * **Body esperado(exemplo):**
 ```
 {
-    "nome" : "Feijao",
-    "fornecedor" : "Camil",
-    "quantidade" : 200,
-    "preco" : 50.32
+  "name": "Descontos do Feriado",
+  "description": "Descontos especiais em pratos selecionados para Feriado!",
+  "restaurantId": "daeb779e-b415-4793-86a4-385607a03385",
+  "product": {
+                "productId": "3ea7f265-a80e-4c73-9af4-df0c2df51627",
+                "promotionalPrice": 5
+            }
 }
 ```
 
