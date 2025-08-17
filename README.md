@@ -49,13 +49,10 @@ https://github.com/joseefrodriguesbr/vale-food-restaurant-management
 
 ### ⚙️ Porta da API: 8083
 
-### ⚙️ Variáveis importantes em application.properties:
+### ⚙️ APIs para comunicação e cache:
 ```
-spring.application.name=vfp
-spring.profiles.active=test
 vale-food.restaurant.url=http://localhost:8081/valefood/promotions
 vale-food.user.url=http://localhost:8080/valefood/promotions
-server.port=8083
 ```
 
 #### 📂 Estrutura de pastas do serviço VFP (Vale Food Promotion)
