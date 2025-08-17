@@ -78,7 +78,7 @@ server.port=8083
 🔐 **Rotas protegidas** (com JWT via AuthController.verificaJWT):  
 As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT.  
 
-🌐 **POST /estoque**  
+🌐 **POST /valefood/promotions**  
 * **Descrição:** Insere uma nova promoção.  
 * **Body esperado(exemplo):**
 ```
@@ -92,6 +92,30 @@ As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT
             }
 }
 ```
+
+🌐 **PUT /valefood/promotions/:IdPromocao**  
+* **Descrição:** Atualiza uma promoção.
+* * **Parâmetro de rota:**  
+  * **:IdPromocao** : Id da promoção a ser atualizada  
+* **Body esperado(exemplo):**
+```
+{
+  "name": "Descontos do Feriado prorrogado",
+  "description": "Descontos especiais em pratos selecionados para Feriado!",
+  "restaurantId": "53fcba1c-595b-495f-9d9a-71b67d3e1bd2",
+  "product": {
+                "productId": "5678e7cb-715e-4121-987a-05a0e021cac6",
+                "promotionalPrice": 1.5
+            }
+}
+```
+
+🌐 **DELETE /valefood/promotions/:IdPromocao**  
+* **Descrição:** deleta uma promoção.
+* * **Parâmetro de rota:**  
+  * **:IdPromocao** : Id da promoção a ser deletada
+ 
+ 
 
 🌐 **PATCH /estoque/:nome**  
 * **Descrição:** Atualiza a quantidade e preço de um produto existente, identificado por seu nome.
