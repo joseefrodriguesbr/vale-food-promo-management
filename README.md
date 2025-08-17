@@ -31,7 +31,9 @@ batem com as categorias preferidas do usuário.
 
 ✅ Cache de user e restaurant recebidos a partir de requisições oriundas de User e Restaurant 
 
-✅ O serviço de users expondo API para que os usuários consigam buscar as "novidades"
+✅ Serviço de users expondo API para que os usuários consigam buscar as "novidades"
+
+✅ Serviço de Restaunt expondo API que exibe suas respectivas promoções
 
 ## 📌 Repositórios relacionados
 ### vale-food-auth:
