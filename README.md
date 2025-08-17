@@ -161,7 +161,7 @@ As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT
   * **:nome** – nome do produto a ser removido.        
 
 ## 🛠️ IDE
-- **Visual Studio Code -  1.102.2**
+- **Eclipse IDE for Enterprise Java and Web Developers - Version: 2025-03 (4.35.0) Build id: 20250306-0812**
 
 ## 💻 Linguagem
-- **Javascript/Node.js**
+- **Java(Spring Boot)**
