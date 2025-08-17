@@ -48,29 +48,23 @@ server.port=8083
 
 #### 📂 Estrutura de pastas do serviço VFP (Vale Food Promotion)
 ```
-📦estoque
- ┗📂src
-   ┣📂node_modules                 # Diretório onde o npm (Node Package Manager) instala todas as dependências do projeto.
-   ┣📂controllers             		 
+📦vale-food-promo-management
+ ┗📂br.inatel.pos.dm111.vfp
+   ┣📂api                          # Diretório onde o npm (Node Package Manager) instala todas as dependências do projeto.
+   ┃ ┣📂core                       # Responsável pela comunicação com o serviço auth
+   ┃ ┃ ┗📂interceptor              # Responsável por atender às requisições do CRUD do serviço Estoque
+   ┃ ┣📂promo          # Responsável pela comunicação com o serviço auth
+   ┃ ┣📂restaurant          # Responsável pela comunicação com o serviço auth
+   ┃ ┗📂user       # Responsável por atender às requisições do CRUD do serviço Estoque
+   ┣📂config             		 
    ┃ ┣📜AuthController.js          # Responsável pela comunicação com o serviço auth
    ┃ ┗📜EstoqueController.js       # Responsável por atender às requisições do CRUD do serviço Estoque
-   ┣📂database
+   ┣📂consumer
    ┃ ┗📜config.js                  # Configurações do MongoDB
-   ┣📂logger                      
+   ┣📂persistence                      
    ┃ ┗📜index.js                   # Responsável pelo registro de logs (não utilizado)
-   ┣📂models                      
-   ┃ ┗📜Produto.js                 # Entidade que conterá os campos a serem manipulados pelo CRUD
-   ┣📂service           	 
-   ┃ ┗📜AlarmeService.js           # Responsável pela comunicação de alarmes ao serviço monitor
-   ┣📜.dockerignore                # Informa ao Docker quais arquivos e pastas devem ser ignorados
-   ┣📜.env                         # Aramazenamento de variáveis de ambiente
-   ┣📜.gitignore                   # Informa ao Docker quais arquivos e pastas devem ser ignorados
-   ┣📜Dockerfile                   # Define os passos para a criação de uma imagem Docker
-   ┣📜index.js                     # Ponto de entrada principal da aplicação
-   ┣📜nodemon.json                 # Configura o comportamento do Nodemon sempre que detecta mudanças nos arquivos
-   ┣📜package-lock.json            # Arquivo gerado automaticamente que registra as versões das dependências instaladas
-   ┣📜package.json                 # Arquivo de configuração principal. Define informações do projeto, dependências e scripts
-   ┗📜routes.js                    # Define, organiza e centraliza as rotas da aplicação
+   ┗📂publisher           	 
+    ┗📜AlarmeService.js           # Responsável pela comunicação de alarmes ao serviço monitor
 ```
 
 
