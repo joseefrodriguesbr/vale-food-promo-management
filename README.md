@@ -27,16 +27,26 @@ Microserviço em Java/Spring Boot que expõe um CRUD (create, read, update e del
 ✅ O cliente poderá listar todas as promoções e uma opção para listar apenas aquelas promoções que sejam do seu interesse, isto é, promoções que contenham produtos cuja categoria
 batem com as categorias preferidas do usuário.
 
+✅ Envio de requições com promoção para user e restaurant, a fim de cache das informações de promoções
+
 ✅ Cache de user e restaurant recebidos a partir de requisições oriundas de User e Restaurant 
 
 ✅ O serviço de users expondo API para que os usuários consigam buscar as "novidades"
 
-
-## 📌 Arquitetura final do projeto 
-<img style="margin-right: 30px" src="./DiagramaProjetoFinal.jpg" width="600px" alt="Diagrama de Classes"/><br>  
-
 ## 📌 Detalhamento da solução
-#### 📂 Estrutura de pastas do serviço de Estoque
+
+### ⚙️ Porta da API: 8083
+
+### ⚙️ Variáveis importantes em application.properties:
+```
+spring.application.name=vfp
+spring.profiles.active=test
+vale-food.restaurant.url=http://localhost:8081/valefood/promotions
+vale-food.user.url=http://localhost:8080/valefood/promotions
+server.port=8083
+```
+
+#### 📂 Estrutura de pastas do serviço VFP (Vale Food Promotion)
 ```
 📦estoque
  ┗📂src
@@ -63,16 +73,6 @@ batem com as categorias preferidas do usuário.
    ┗📜routes.js                    # Define, organiza e centraliza as rotas da aplicação
 ```
 
-### ⚙️ Porta da API: 8083
-
-### ⚙️ Variáveis importantes em application.properties:
-```
-spring.application.name=vfp
-spring.profiles.active=test
-vale-food.restaurant.url=http://localhost:8081/valefood/promotions
-vale-food.user.url=http://localhost:8080/valefood/promotions
-server.port=8083
-```
 
 ### ⚙️ Rotas:
 🔓 **Rota pública** (sem autenticação):  
