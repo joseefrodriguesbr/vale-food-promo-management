@@ -115,6 +115,7 @@ As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT
 * * **Parâmetro de rota:**  
   * **:IdPromocao** : Id da promoção a ser deletada
 
+
 🌐 **GET /valefood/promotions**
 * **Descrição:** Lista todas as promoções cadastradas
 * **Body esperado(exemplo):**
@@ -218,7 +219,6 @@ As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT
     }
 ]
 ``` 
-
 
 🌐 **GET /valefood/promotions/restaurant/:IdRestaurant**  
 * **Descrição:** Consulta promoções cadastradas para um restaurante informado
