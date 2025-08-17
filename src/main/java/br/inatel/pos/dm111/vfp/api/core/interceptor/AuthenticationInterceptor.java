@@ -18,7 +18,6 @@ import br.inatel.pos.dm111.vfp.persistence.restaurant.Restaurant;
 import br.inatel.pos.dm111.vfp.persistence.restaurant.RestaurantRepository;
 import br.inatel.pos.dm111.vfp.persistence.user.User;
 import br.inatel.pos.dm111.vfp.persistence.user.UserRepository;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.impl.DefaultJws;
@@ -38,13 +37,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
     
-    private final TokenService tokenService;
 
-    public AuthenticationInterceptor(JwtParser jwtParser, UserRepository userRepository, RestaurantRepository restaurantRepository, TokenService tokenService) {
+    public AuthenticationInterceptor(JwtParser jwtParser, UserRepository userRepository, RestaurantRepository restaurantRepository) {
         this.jwtParser = jwtParser;
         this.userRepository = userRepository;
         this.restaurantRepository = restaurantRepository;
-        this.tokenService = tokenService;
     }
 
     // USERS
@@ -78,13 +75,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             var appJwtToken = new AppJwtToken(issuer, subject, role, method, uri);
             authenticateRequest(appJwtToken);
             
-            Claims claims = tokenService.readToken(token);
-
-            // pega o email do "sub"
-            String email = claims.getSubject();
+//            Claims claims = tokenService.readToken(token);
+//            //pega o email do "sub"
+//            String email = claims.getSubject();
 
             // busca usuário no repositório
-            Optional<User> userOpt = userRepository.getByEmail(email);
+            Optional<User> userOpt = userRepository.getByEmail(appJwtToken.subject());
             if (userOpt.isPresent()) {
                 // salva o usuário na request para ser usado depois
                 request.setAttribute("authenticatedUser", userOpt.get());

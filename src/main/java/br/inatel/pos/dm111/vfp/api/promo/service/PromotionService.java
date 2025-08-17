@@ -184,7 +184,7 @@ public class PromotionService
 							if (preferredCategories.contains(product.category()))
 							{
 								PromotionalProductResponse promotionalProductResponse = new PromotionalProductResponse(promotion.product().productId(), promotion.product().promotionalPrice(), product.category(), product.name());
-								PromotionResponse promotionResponse = new PromotionResponse(promotion.id(), promotion.name(), promotion.description(), promotion.restaurantId(), promotionalProductResponse);
+								PromotionResponse promotionResponse = new PromotionResponse(promotion.id(), promotion.name(), promotion.description(), promotion.restaurantId(), restaurant.name(), promotionalProductResponse);
 								listaPromotionResponse.add(promotionResponse);
 								break;
 							}
@@ -232,7 +232,7 @@ public class PromotionService
 				break;
 			}
 		}
-		return new PromotionResponse(promotion.id(), promotion.name(), promotion.description(), promotion.restaurantId(), promotionalProductResponse);
+		return new PromotionResponse(promotion.id(), promotion.name(), promotion.description(), promotion.restaurantId(), restaurant.name(), promotionalProductResponse);
 	}
 
 	// Sobrecarga do método para quando o restaurante não é conhecido de imediato (ex: listAllPromotions)
