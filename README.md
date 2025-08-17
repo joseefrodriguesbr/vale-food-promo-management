@@ -33,6 +33,16 @@ batem com as categorias preferidas do usuário.
 
 ✅ O serviço de users expondo API para que os usuários consigam buscar as "novidades"
 
+## 📌 Repositórios relacionados
+### vale-food-auth:
+https://github.com/joseefrodriguesbr/vale-food-auth
+
+### vale-food-user-management:
+https://github.com/joseefrodriguesbr/vale-food-user-management
+
+### vale-food-restaurant-management:
+https://github.com/joseefrodriguesbr/vale-food-restaurant-management
+
 ## 📌 Detalhamento da solução
 
 ### ⚙️ Porta da API: 8083
