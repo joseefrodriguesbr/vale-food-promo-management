@@ -114,76 +114,148 @@ As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT
 * **Descrição:** deleta uma promoção.
 * * **Parâmetro de rota:**  
   * **:IdPromocao** : Id da promoção a ser deletada
- 
- 
 
-🌐 **PATCH /estoque/:nome**  
-* **Descrição:** Atualiza a quantidade e preço de um produto existente, identificado por seu nome.
-* **Middlewares:**  
-  * **validaProduto:** valida os dados fornecidos para a atualização.
-  * **atualizar:** aplica as alterações ao produto.
-* **Parâmetro de rota:**  
-  * **:nome** : nome do produto a ser atualizado.  
+🌐 **GET /valefood/promotions**
+* **Descrição:** Lista todas as promoções cadastradas
+* **Body esperado(exemplo):**
+```
+[
+    {
+        "id": "e9203869-da78-4e09-8237-8c9bbc7aeb60",
+        "name": "Descontos do Feriado",
+        "description": "Descontos especiais em pratos selecionados para Feriado!",
+        "restaurantId": "52a2c945-11d0-40b9-85fd-739f537e02bd",
+        "restaurantName": "Restaurante Cozinha da Fazenda",
+        "product": {
+            "productId": "622fc20a-c7c4-4c3a-a266-9845481e69eb",
+            "promotionalPrice": 2.5,
+            "category": "Carnes",
+            "productName": "Linguiça"
+        }
+    },
+    {
+        "id": "0a4f48ed-4a05-4084-9a52-2eb82a643f91",
+        "name": "Descontos do Feriado",
+        "description": "Descontos especiais em pratos selecionados para Feriado!",
+        "restaurantId": "cad9771d-29e6-4d8c-8dfb-bb678e32d088",
+        "restaurantName": "Pizzaria",
+        "product": {
+            "productId": "713980f5-2e6f-410a-a064-ea457b3da38e",
+            "promotionalPrice": 2.5,
+            "category": "Massas",
+            "productName": "Macarronada"
+        }
+    },
+    {
+        "id": "06bb002f-1f64-486d-a5e3-4e5f30b26983",
+        "name": "Descontos do Final de semana",
+        "description": "Descontos especiais em pratos selecionados para Final de semana!",
+        "restaurantId": "52a2c945-11d0-40b9-85fd-739f537e02bd",
+        "restaurantName": "Restaurante Cozinha da Fazenda",
+        "product": {
+            "productId": "8974a7c6-7046-40ac-8690-17e4a087b969",
+            "promotionalPrice": 1.5,
+            "category": "Carnes",
+            "productName": "File"
+        }
+    }
+]
+```
+
+🌐 **GET /valefood/promotions/:IdPromocao**  
+* **Descrição:** Consulta uma promoção por Id.
+* * **Parâmetro de rota:**  
+  * **:IdPromocao** : Id da promoção a ser consultada  
 * **Body esperado(exemplo):**
 ```
 {
-    "quantidade" : 450,
-    "preco" : 18.20
+    "id": "0a4f48ed-4a05-4084-9a52-2eb82a643f91",
+    "name": "Descontos do Feriado",
+    "description": "Descontos especiais em pratos selecionados para Feriado!",
+    "restaurantId": "cad9771d-29e6-4d8c-8dfb-bb678e32d088",
+    "restaurantName": "Pizzaria",
+    "product": {
+        "productId": "713980f5-2e6f-410a-a064-ea457b3da38e",
+        "promotionalPrice": 2.5,
+        "category": "Massas",
+        "productName": "Macarronada"
+    }
 }
 ```
 
-🌐 **GET /estoque**
-* **Descrição:** Busca e retorna a lista de produtos em estoque.
-* **Middleware:** buscar
-* **Resposta esperada(exemplo):**
-```
-{
-    "count": 2,
-    "produtoList": [
-        {
-            "_id": "68828bea90f6cf8f252d44f7",
-            "nome": "Carne",
-            "fornecedor": "Friboi",
-            "quantidade": 200,
-            "preco": 85.76,
-            "createdAt": "2025-07-24T19:39:22.597Z",
-            "updatedAt": "2025-07-24T19:39:22.597Z",
-            "__v": 0
-        },
-        {
-            "_id": "68828c0b90f6cf8f252d44fa",
-            "nome": "Arroz",
-            "fornecedor": "Joao",
-            "quantidade": 3,
-            "preco": 40.55,
-            "createdAt": "2025-07-24T19:39:55.387Z",
-            "updatedAt": "2025-07-24T19:42:43.114Z",
-            "__v": 0
+🌐 **GET /valefood/promotions/user/:IdUser**  
+* **Descrição:** Consulta promoções recomendadas para usuário informado.
+* * **Parâmetro de rota:**  
+  * **:IdUser** : Id do usuário a filtrar promoções recomendadas 
+* **Body esperado(exemplo):**
+``` 
+[
+    {
+        "id": "e9203869-da78-4e09-8237-8c9bbc7aeb60",
+        "name": "Descontos do Feriado",
+        "description": "Descontos especiais em pratos selecionados para Feriado!",
+        "restaurantId": "52a2c945-11d0-40b9-85fd-739f537e02bd",
+        "restaurantName": "Restaurante Cozinha da Fazenda",
+        "product": {
+            "productId": "622fc20a-c7c4-4c3a-a266-9845481e69eb",
+            "promotionalPrice": 2.5,
+            "category": "Carnes",
+            "productName": "Linguiça"
         }
-    ]
-}
+    },
+    {
+        "id": "0a4f48ed-4a05-4084-9a52-2eb82a643f91",
+        "name": "Descontos do Feriado",
+        "description": "Descontos especiais em pratos selecionados para Feriado!",
+        "restaurantId": "cad9771d-29e6-4d8c-8dfb-bb678e32d088",
+        "restaurantName": "Pizzaria",
+        "product": {
+            "productId": "713980f5-2e6f-410a-a064-ea457b3da38e",
+            "promotionalPrice": 2.5,
+            "category": "Massas",
+            "productName": "Macarronada"
+        }
+    }
+]
+``` 
+
+
+🌐 **GET /valefood/promotions/restaurant/:IdRestaurant**  
+* **Descrição:** Consulta promoções cadastradas para um restaurante informado
+* * **Parâmetro de rota:**  
+  * **:IdUser** : Id do restaurante
+* **Body esperado(exemplo):**
+``` 
+[
+    {
+        "id": "e9203869-da78-4e09-8237-8c9bbc7aeb60",
+        "name": "Descontos do Feriado",
+        "description": "Descontos especiais em pratos selecionados para Feriado!",
+        "restaurantId": "52a2c945-11d0-40b9-85fd-739f537e02bd",
+        "restaurantName": "Restaurante Cozinha da Fazenda",
+        "product": {
+            "productId": "622fc20a-c7c4-4c3a-a266-9845481e69eb",
+            "promotionalPrice": 2.5,
+            "category": "Carnes",
+            "productName": "Linguiça"
+        }
+    },
+    {
+        "id": "06bb002f-1f64-486d-a5e3-4e5f30b26983",
+        "name": "Descontos do Final de semana",
+        "description": "Descontos especiais em pratos selecionados para Final de semana!",
+        "restaurantId": "52a2c945-11d0-40b9-85fd-739f537e02bd",
+        "restaurantName": "Restaurante Cozinha da Fazenda",
+        "product": {
+            "productId": "8974a7c6-7046-40ac-8690-17e4a087b969",
+            "promotionalPrice": 1.5,
+            "category": "Carnes",
+            "productName": "File"
+        }
+    }
+]
 ```
 
-* **Suporte a rotas com query params:**
-  * 📥 Exemplos de requisição:
-    * Buscar por nome e fornecedor:
-    ```
-    GET http://localhost:3003/estoque?nome=Carne&fornecedor=Friboi
-    ```
-    * Buscar apenas por nome:
-    ```
-    GET http://localhost:3003/estoque?nome=Carne
-    ```
-    * Buscar apenas por fornecedor:
-    ```
-    GET http://localhost:3003/estoque?fornecedor=Friboi
-    ```
-    
-🌐 **DELETE /estoque/:nome**
-* **Descrição:** Remove um produto do estoque com base no nome fornecido.
-* **Middleware:** excluir
-* **Parâmetro de rota:**
-  * **:nome** – nome do produto a ser removido.        
 
 ## 🛠️ IDE
 - **Eclipse IDE for Enterprise Java and Web Developers - Version: 2025-03 (4.35.0) Build id: 20250306-0812**
