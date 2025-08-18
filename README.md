@@ -232,7 +232,7 @@ As rotas abaixo requerem autenticação JWT.
 🌐 **GET /valefood/promotions/restaurant/:IdRestaurant**  
 * **Descrição:** Consulta promoções cadastradas para um restaurante informado
 * * **Parâmetro de rota:**  
-  * **:IdUser** : Id do restaurante
+  * **:IdRestaurant** : Id do restaurante
 * **Resposta esperada(exemplo):**
 ``` 
 [
