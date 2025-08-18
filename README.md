@@ -35,7 +35,7 @@ batem com as categorias preferidas do usuário.
 
 ✅ Serviço de Restaunt expondo API que exibe suas respectivas promoções
 
-## 📌 Repositórios relacionados
+## 📌 Repositórios relacionados necessários para a execução
 ### vale-food-auth:
 https://github.com/joseefrodriguesbr/vale-food-auth
 
