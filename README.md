@@ -84,8 +84,8 @@ vale-food.user.url=http://localhost:8080/valefood/promotions
 
 ### ⚙️ Rotas:
 
-🔐 **Rotas protegidas** (autenticação JWT):  
-As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT.  
+🔐 **Rotas protegidas**:  
+As rotas abaixo requerem autenticação JWT.  
 
 🌐 **POST /valefood/promotions**  
 * **Descrição:** Insere uma nova promoção.  
