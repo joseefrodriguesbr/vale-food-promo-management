@@ -89,7 +89,7 @@ As rotas abaixo requerem autenticação JWT.
 
 🌐 **POST /valefood/promotions**  
 * **Descrição:** Insere uma nova promoção.  
-* **Body esperado(exemplo):**
+* **Body esperada(exemplo):**
 ```
 {
   "name": "Descontos do Feriado",
@@ -106,7 +106,7 @@ As rotas abaixo requerem autenticação JWT.
 * **Descrição:** Atualiza uma promoção.
 * * **Parâmetro de rota:**  
   * **:IdPromocao** : Id da promoção a ser atualizada  
-* **Body esperado(exemplo):**
+* **Body esperada(exemplo):**
 ```
 {
   "name": "Descontos do Feriado prorrogado",
@@ -127,7 +127,7 @@ As rotas abaixo requerem autenticação JWT.
 
 🌐 **GET /valefood/promotions**
 * **Descrição:** Lista todas as promoções cadastradas
-* **Resposta esperado(exemplo):**
+* **Resposta esperada(exemplo):**
 ```
 [
     {
@@ -176,7 +176,7 @@ As rotas abaixo requerem autenticação JWT.
 * **Descrição:** Consulta uma promoção por Id.
 * * **Parâmetro de rota:**  
   * **:IdPromocao** : Id da promoção a ser consultada  
-* **Resposta esperado(exemplo):**
+* **Resposta esperada(exemplo):**
 ```
 {
     "id": "0a4f48ed-4a05-4084-9a52-2eb82a643f91",
@@ -197,7 +197,7 @@ As rotas abaixo requerem autenticação JWT.
 * **Descrição:** Consulta promoções recomendadas para usuário informado.
 * * **Parâmetro de rota:**  
   * **:IdUser** : Id do usuário a filtrar promoções recomendadas 
-* **Resposta esperado(exemplo):**
+* **Resposta esperada(exemplo):**
 ``` 
 [
     {
@@ -233,7 +233,7 @@ As rotas abaixo requerem autenticação JWT.
 * **Descrição:** Consulta promoções cadastradas para um restaurante informado
 * * **Parâmetro de rota:**  
   * **:IdUser** : Id do restaurante
-* **Resposta esperado(exemplo):**
+* **Resposta esperada(exemplo):**
 ``` 
 [
     {
